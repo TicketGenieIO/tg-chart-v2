@@ -19,6 +19,21 @@ type chartTypeConfig = {
   max: boolean;
   avg: boolean;
 };
+/**
+ * Represents a chart component.
+ * @component
+ * @param {Object} props - The component props.
+ * @param {Object} props.config - The configuration object for the chart.
+ * @param {Object} props.config.primary - The configuration for the primary chart.
+ * @param {boolean} props.config.primary.min - Determines if the primary min chart is enabled.
+ * @param {boolean} props.config.primary.max - Determines if the primary max chart is enabled.
+ * @param {boolean} props.config.primary.avg - Determines if the primary avg chart is enabled.
+ * @param {Object} props.config.secondary - The configuration for the secondary chart.
+ * @param {boolean} props.config.secondary.min - Determines if the secondary min chart is enabled.
+ * @param {boolean} props.config.secondary.max - Determines if the secondary max chart is enabled.
+ * @param {boolean} props.config.secondary.avg - Determines if the secondary avg chart is enabled.
+ * @returns {JSX.Element} The rendered chart component.
+ */
 function Chart({
   config,
 }: {
@@ -51,6 +66,10 @@ function Chart({
   ].filter(Boolean).length;
   // Triggered by onZoomDomainChange and
   // alters VictoryBrushContainer brushDomain prop
+  /**
+   * Handles the zoom event and updates the selected domain.
+   * @param {Object} domain - The zoom domain.
+   */
   function handleZoom(domain: any) {
     console.log({ domain });
     setSelectedDomain(domain);
@@ -61,7 +80,14 @@ function Chart({
   function handleBrush(domain: any) {
     setZoomDomain(domain);
   }
-
+  /**
+   * Generates the tooltip text based on the chart point data.
+   * @param {Object} ev - The event object.
+   * @param {Object} ev.datum - The data object associated with the event.
+   * @param {Object} ev.datum.secondary - The secondary price object.
+   * @param {Object} ev.datum.primary - The primary price object.
+   * @returns {string} The tooltip text.
+   */
   function getTooltipText(ev: {
     datum: {
       secondary: PriceObject;

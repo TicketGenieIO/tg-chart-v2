@@ -14,6 +14,21 @@ function operateOnY(X: number, Y: number) {
 
   return output;
 }
+/**
+ * Represents a custom tooltip component for the chart.
+ * @param {Object} props - The component props.
+ * @param {string[]} props.text - The array of tooltip text lines.
+ * @param {number} props.chartCount - The number of charts displayed.
+ * @param {number} props.x - The x-coordinate of the tooltip in relation to the width/height of the chart.
+ * @param {number} props.y - The y-coordinate of the tooltip in relation to the width/height of the chart.
+ * @param {Object} props.datum - The data object associated with the tooltip.
+ * @param {Object} props.activePoints - The active points in the chart.
+ * @param {number} props.index - The index of the tooltip.
+ * @param {Object} props.style - The style object for the tooltip.
+ * @param {boolean} props.horizontal - Determines if the tooltip is horizontal.
+ * @param {number} props.width - The width of the chart the tooltip is inside of.
+ * @returns {JSX.Element} The rendered tooltip component.
+ */
 export function CustomTooltip(props: {
   text?: string[];
   chartCount: number;
