@@ -70,22 +70,22 @@ function Chart({
   }) {
     const { secondary, primary } = ev.datum;
     return `${
-      !!config.primary.min ? `primary.min: ${primary?.min.toFixed(2)}` : ""
+      !!config.primary.min ? `Primary min: ${primary?.min.toFixed(2)}` : ""
     }${
-      !!config.primary.avg ? `\nprimary.avg: ${primary?.avg.toFixed(2)}` : ""
+      !!config.primary.avg ? `\nPrimary avg: ${primary?.avg.toFixed(2)}` : ""
     }${
-      !!config.primary.max ? `\nsecondary.max: ${primary?.max.toFixed(2)}` : ""
+      !!config.primary.max ? `\nPrimary max: ${primary?.max.toFixed(2)}` : ""
     }${
       !!config.secondary.min
-        ? `\nsecondary.min: ${secondary?.min.toFixed(2)}`
+        ? `\nSecondary min: ${secondary?.min.toFixed(2)}`
         : ""
     }${
       !!config.secondary.avg
-        ? `\nsecondary.avg: ${secondary?.avg.toFixed(2)}`
+        ? `\nSecondary avg: ${secondary?.avg.toFixed(2)}`
         : ""
     }${
       !!config.secondary.max
-        ? `\nsecondary.max: ${secondary?.max.toFixed(2)}`
+        ? `\nSecondary max: ${secondary?.max.toFixed(2)}`
         : ""
     }`;
   }
@@ -158,7 +158,7 @@ function Chart({
       </svg>
 
       <VictoryChart
-        width={1000}
+        width={800}
         height={500}
         scale={{ x: "time" }}
         theme={BounceTheme}
@@ -270,8 +270,13 @@ function Chart({
         }
       >
         <VictoryAxis
-          tickValues={[]} //getTicks
-          tickFormat={(x) => new Date(x).getFullYear()}
+          // tickValues={[]} //getTicks
+          tickFormat={(x) => {
+            const date = new Date(x);
+            return `${date.getDate()}/${
+              date.getMonth() + 1
+            }/${date.getFullYear()}`;
+          }}
         />
         {config.primary.avg && (
           <VictoryArea

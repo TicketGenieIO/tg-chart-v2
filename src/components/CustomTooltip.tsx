@@ -1,7 +1,5 @@
-import { OrientationTypes, VictoryTooltip } from "victory";
-
 import { BouncePurple } from "../constants/customVictoryTheme";
-
+import TicketIcon from "../assets/icons/greyticket.png";
 function operateOnY(X: number, Y: number) {
   const minY = 176; // Minimum Y value
   const maxY = 900; // Maximum Y value
@@ -49,7 +47,8 @@ export function CustomTooltip(props: {
       {textToUse.map((line, index) => {
         return (
           <g>
-            <rect
+            <image
+              href={TicketIcon}
               width={16}
               height={16}
               fill={
@@ -60,6 +59,17 @@ export function CustomTooltip(props: {
               x={(initialXToUse || 0) + 15} // 15 right space
               y={yToUse - 20 + index * 20} // 20 up + spacing (index * spaceSize )
             />
+            {/* <rect
+              width={16}
+              height={16}
+              fill={
+                ["purple", "blue", "green", "yellow", "tan", "red", "orange"][
+                  index
+                ]
+              }
+              x={(initialXToUse || 0) + 15} // 15 right space
+              y={yToUse - 20 + index * 20} // 20 up + spacing (index * spaceSize )
+            /> */}
             <text
               x={(initialXToUse || 0) + 15 + 16 + 5} // right space + size of icon + spacing from icon
               y={yToUse - 7 + index * 20} // 7 up (try to have it in the middle of the icon ) + spacing (index * spaceSize )
