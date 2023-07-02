@@ -167,7 +167,7 @@ function Chart({
             voronoiDimension="x"
             labels={getTooltipText}
             labelComponent={<CustomTooltip chartCount={chartCount} />}
-            responsive={false}
+            responsive={true}
             zoomDimension="x"
             zoomDomain={zoomDomain}
             allowZoom={true}
@@ -257,7 +257,7 @@ function Chart({
         theme={BounceTheme}
         containerComponent={
           <VictoryBrushContainer
-            responsive={false}
+            responsive={true}
             brushStyle={{
               fill: "white",
               fillOpacity: 0.2,

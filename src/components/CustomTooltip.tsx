@@ -26,27 +26,15 @@ export function CustomTooltip(props: {
   index?: number;
   style?: any;
   horizontal?: boolean;
+  width?: number;
 }) {
   const textToUse = props.text?.slice(0, props.chartCount) || [];
   /// when you add more charts the tooltip moves down, need to move the Y up to accomodate for it dependant on the amount of charts
   const yToUse = operateOnY(props.chartCount, props.y || 0);
-  function handleOrientation(ev: { _voronoiX: number; datum: any }) {
-    console.log({ ev });
-    if (ev.datum.x) {
-      console.log({
-        ev,
-        props,
-        voronoiX: ev._voronoiX,
-        x: ev.datum.x.getTime(),
-        textToUse,
-        chartCount: props.chartCount,
-        y: props.y,
-      });
-      //// if X >= maxX - relativetooltipwidthNumber = left
-      //// else = right
-    }
-    return "right" as OrientationTypes;
-  }
+
+  // calculate initial X to set orientation on left or right depending on if we are on the last X points on the chart and the data would overflow
+  const initialXToUse =
+    props.x && props.x > (props.width || 1000) * 0.75 ? props.x - 220 : props.x;
   return (
     <g>
       {/* point glyph */}
@@ -69,11 +57,11 @@ export function CustomTooltip(props: {
                   index
                 ]
               }
-              x={(props.x || 0) + 15} // 15 right space
+              x={(initialXToUse || 0) + 15} // 15 right space
               y={yToUse - 20 + index * 20} // 20 up + spacing (index * spaceSize )
             />
             <text
-              x={(props.x || 0) + 15 + 16 + 5} // right space + size of icon + spacing from icon
+              x={(initialXToUse || 0) + 15 + 16 + 5} // right space + size of icon + spacing from icon
               y={yToUse - 7 + index * 20} // 7 up (try to have it in the middle of the icon ) + spacing (index * spaceSize )
               style={{
                 fontFamily: `"Gill Sans", "Gill Sans MT", "Seravek", "Trebuchet MS", sans-serif`,
@@ -92,16 +80,16 @@ export function CustomTooltip(props: {
         );
       })}
       <line
-        x1={(props.x || 0) + 15}
+        x1={(initialXToUse || 0) + 15}
         y1={yToUse + textToUse.length * 20 - 15}
-        x2={(props.x || 0) + 220}
+        x2={(initialXToUse || 0) + 220}
         y2={yToUse + textToUse.length * 20 - 15}
         stroke={BouncePurple}
         stroke-width="2"
         stroke-dasharray="5,5"
       />
       <text
-        x={(props.x || 0) + 15} // right space
+        x={(initialXToUse || 0) + 15} // right space
         y={yToUse + textToUse.length * 20} // 7 up (try to have it in the middle of the icon ) + spacing (index * spaceSize )
         style={{
           fontFamily: `"Gill Sans", "Gill Sans MT", "Seravek", "Trebuchet MS", sans-serif`,
@@ -116,12 +104,6 @@ export function CustomTooltip(props: {
       >
         {`Date:${props.datum.x.toISOString()}`}
       </text>
-      <VictoryTooltip
-        {...props}
-        cornerRadius={0}
-        constrainToVisibleArea
-        orientation={handleOrientation}
-      />
     </g>
   );
 }
